@@ -1,0 +1,15 @@
+import { Schema, model, models } from "mongoose"
+import type { {{ pascalCase newDirectory }} } from "types"
+
+if (models?.{{ pascalCase newDirectory }}) {
+	delete models.{{ pascalCase newDirectory }}
+}
+
+const {{ camelCase newDirectory }}Schema = new Schema<{{ pascalCase newDirectory }}>(
+	{
+		
+	},
+	{ timestamps: true }
+)
+
+export const {{ pascalCase newDirectory }}Model = model<{{ pascalCase newDirectory }}>("{{ pascalCase newDirectory }}", {{ camelCase newDirectory }}Schema)

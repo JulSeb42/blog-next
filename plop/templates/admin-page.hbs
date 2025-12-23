@@ -1,0 +1,15 @@
+import type { Metadata } from "next"
+import { Text } from "@julseb-lib/react"
+import { AdminPage } from "components"
+
+export const metadata: Metadata = {
+	title: "{{ title }}",
+}
+
+export default{{#if async}} async{{/if}} function Admin{{>pascalName}}() {
+	return (
+		<AdminPage>
+			<Text tag="h1">{{ title }}</Text>
+		</AdminPage>
+	)
+}

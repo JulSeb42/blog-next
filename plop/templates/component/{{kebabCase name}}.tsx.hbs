@@ -1,0 +1,13 @@
+{{#if client}}
+"use client"
+{{/if}}
+import { clsx } from "@julseb-lib/react"
+import type { I{{>pascalName }} } from "./types"
+
+export default function {{>pascalName }}({ {{#if ref }}ref,{{/if}} }: I{{>pascalName }}) {
+    return (
+        <{{ lowerCase tag }} className={clsx("", "{{>kebabName}}")} {{#if ref }} ref={ref}{{/if}}>
+            
+        </{{ lowerCase tag }}>
+    )
+}

@@ -1,0 +1,15 @@
+import { http } from "./http-common"
+import { generateServerRoute } from "utils"
+import type { SERVER_PATHS } from "./server-paths"
+import type { ApiResponse, {{ pascalCase newDirectory }} } from "types"
+
+type PATHS = keyof typeof SERVER_PATHS.{{ constantCase newDirectory }}
+
+const generateRoute = (route: Exclude<PATHS, "ROOT">, id?: string) =>
+	generateServerRoute("{{ constantCase newDirectory }}", route, id)
+
+class {{ pascalCase newDirectory }}Service {
+	/* Prepend route - DO NOT REMOVE */
+}
+
+export const {{ camelCase newDirectory }}Service = new {{ pascalCase newDirectory }}Service()

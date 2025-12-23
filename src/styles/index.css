@@ -1,0 +1,10 @@
+@import "tailwindcss"; /* Although this is not required, it's useful to get Tailwind Intellisense */
+
+:root {
+	--admin-nav-width-closed: 52px;
+	--admin-nav-width-open: 200px;
+}
+
+.ab {
+	max-width: calc(100% - var(--admin-nav-width-open));
+}
