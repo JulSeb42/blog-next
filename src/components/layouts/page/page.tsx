@@ -49,7 +49,7 @@ export default function Page({
 				noMain={noMain as any}
 				noWrapper={noWrapper as any}
 				wrapperProps={{
-					className: "mt-14 min-h-fit! h-fit! bg-transparent",
+					className: "mt-21 min-h-fit! h-fit! bg-transparent",
 					...rest.wrapperProps,
 				}}
 				mainProps={{ className: "py-0 bg-transparent", size: mainSize }}
