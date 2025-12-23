@@ -10,7 +10,7 @@ export function AnonRoute({ children }: IAnonPage) {
 
 	useEffect(() => {
 		if (!loading && isLoggedIn) {
-			router.push("/my-account")
+			router.push("/admin")
 		}
 	}, [isLoggedIn, loading, router])
 

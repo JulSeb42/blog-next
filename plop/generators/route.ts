@@ -24,6 +24,10 @@ export default (plop: NodePlopAPI) => {
 				type: "list",
 				name: "directory",
 				message: "Which API directory?",
+				choices: async () => {
+					const directories = await getApiDirectories()
+					return [...directories, "Create new directory"]
+				},
 			},
 			{
 				type: "input",

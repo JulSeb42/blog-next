@@ -1,15 +1,24 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Form, Input, InputCheck, Text } from "@julseb-lib/react"
 import { ErrorMessage } from "components"
-import { authService } from "api"
+import { authService, userService } from "api"
 import { useAuth } from "context"
-import type { IErrorMessage } from "types"
+import type { IErrorMessage, User } from "types"
 
 export function SignupForm() {
 	const { refetch, setLoading } = useAuth()
+
+	const [allUsers, setAllUsers] = useState<Array<User>>([])
+
+	useEffect(() => {
+		userService
+			.allUsers()
+			.then(res => setAllUsers((res.data as any).users as Array<User>))
+			.catch(err => console.error(err))
+	}, [])
 
 	const [inputs, setInputs] = useState({
 		fullName: "",
@@ -49,7 +58,7 @@ export function SignupForm() {
 			<Form
 				buttonPrimary="Create your account"
 				onSubmit={handleSubmit}
-				className="w-full max-w-[400px]"
+				className="w-full max-w-100"
 				isLoading={isLoading}
 			>
 				<Input
@@ -88,9 +97,12 @@ export function SignupForm() {
 
 			<ErrorMessage>{errorMessage}</ErrorMessage>
 
-			<Text>
-				You already have an account? <Link href="/login">Log in.</Link>
-			</Text>
+			{allUsers.length && (
+				<Text>
+					You already have an account?{" "}
+					<Link href="/login">Log in.</Link>
+				</Text>
+			)}
 		</>
 	)
 }

@@ -29,7 +29,7 @@ class UserService {
 		search?: string
 		role?: string
 		fields?: string
-	}): ApiResponse<ResponseInfiniteUsers | Array<User>> => {
+	} = {}): ApiResponse<ResponseInfiniteUsers | Array<User>> => {
 		if (page) {
 			const params = new URLSearchParams({
 				page: page.toString(),
@@ -50,6 +50,9 @@ class UserService {
 
 	getUser = async (id: string): ApiResponse<User> =>
 		await http.get(generateRoute("USER", id))
+
+	userSlug = async (slug: string): ApiResponse<User> =>
+		await http.get(generateRoute("USER_SLUG", slug))
 
 	editAccount = async (
 		id: string,

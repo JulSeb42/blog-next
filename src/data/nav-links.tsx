@@ -8,12 +8,10 @@ export type NavLink = {
 }
 
 export const navLinks: Array<NavLink> = [
-	{ title: "Homepage", href: "/", type: "all" },
-	{ title: "Users", href: "/users", type: "all" },
-	{ title: "Signup", href: "/signup", type: "anon" },
-	{ title: "Login", href: "/login", type: "anon" },
-	{ title: "My account", href: "/my-account", type: "protected" },
-	{ title: "Admin", href: "/admin", type: "admin" },
+	{ title: "Posts", href: "/", type: "all" },
+	{ title: "Categories", href: "/categories", type: "all" },
+	{ title: "Authors", href: "/authors", type: "all" },
+	{ title: "Admin", href: "/admin", type: "protected" },
 ]
 
 type AdminNavLink = Omit<NavLink, "type"> & {

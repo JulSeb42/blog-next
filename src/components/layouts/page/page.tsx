@@ -1,12 +1,14 @@
-import { Fragment } from "react"
+"use client"
+import { Fragment, useState, useEffect } from "react"
+import { redirect, usePathname } from "next/navigation"
 import { PageLayout, PageLoading } from "@julseb-lib/react"
-import { AdminRoute } from "../admin-route"
 import { AnonRoute } from "../anon-route"
 import { ProtectedRoute } from "../protected-route"
 import { Header } from "../header"
+import { userService } from "api"
 import type { ILibPageLayout } from "@julseb-lib/react/component-props"
 import type { LibMainSize } from "@julseb-lib/react/types"
-import type { PageType } from "types"
+import type { PageType, User } from "types"
 
 export default function Page({
 	type,
@@ -17,21 +19,33 @@ export default function Page({
 	mainSize,
 	...rest
 }: IPage) {
-	const Element =
-		type === "admin"
-			? AdminRoute
-			: type === "protected"
-				? ProtectedRoute
-				: type === "anon"
-					? AnonRoute
-					: Fragment
+	const [users, setUsers] = useState<Array<User>>([])
+	const [loading, setLoading] = useState(true)
+	const pathname = usePathname()
 
-	if (isLoading) return <PageLoading />
+	useEffect(() => {
+		userService
+			.allUsers()
+			.then(res => setUsers((res.data as any).users as Array<User>))
+			.catch(err => console.error(err))
+			.finally(() => setLoading(false))
+	}, [])
+
+	const Element =
+		type === "protected"
+			? ProtectedRoute
+			: type === "anon"
+				? AnonRoute
+				: Fragment
+
+	if (isLoading || loading) return <PageLoading />
+
+	if (!users.length && pathname !== "/signup") return redirect("/signup")
 
 	return (
 		<Element>
 			<PageLayout
-				header={<Header />}
+				header={users.length && <Header />}
 				noMain={noMain as any}
 				noWrapper={noWrapper as any}
 				wrapperProps={{

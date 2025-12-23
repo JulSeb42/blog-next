@@ -75,7 +75,7 @@ export function VerifyPage() {
 	return (
 		<Text>
 			Your account is verified! You can now access all the functionalities
-			on our website. <Link href="/my-account">Go to your account</Link>.
+			on our website. <Link href="/admin">Go to your account</Link>.
 		</Text>
 	)
 }

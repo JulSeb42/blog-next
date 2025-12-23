@@ -25,12 +25,7 @@ export function DemoLogin() {
 				refetch()
 				setLoading(true)
 			})
-			.then(() =>
-				setTimeout(
-					() => redirect(role === "admin" ? `/admin` : `/my-account`),
-					200,
-				),
-			)
+			.then(() => setTimeout(() => redirect(`/admin`), 200))
 			.catch(err => {
 				console.error(err)
 				setErrorMessage(err?.response?.data?.message)

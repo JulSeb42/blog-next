@@ -44,7 +44,7 @@ export function LoginForm() {
 			.then(() => {
 				refetch()
 				setLoading(true)
-				redirect("/my-account")
+				redirect("/admin")
 			})
 			.catch(err => {
 				console.error(err)

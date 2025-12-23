@@ -1,6 +1,6 @@
 "use client"
 import { PageLoading, Main, Wrapper, clsx } from "@julseb-lib/react"
-import { AdminRoute } from "../admin-route"
+import { ProtectedRoute } from "../protected-route"
 import { AdminNav } from "./admin-nav"
 import type { IAdminLayout } from "./types"
 
@@ -12,7 +12,7 @@ export default function AdminPage({
 	if (isLoading) return <PageLoading />
 
 	return (
-		<AdminRoute>
+		<ProtectedRoute>
 			<AdminNav />
 
 			<Wrapper className={clsx("bg-gray-100 mx-[calc(auto+12px)] py-12")}>
@@ -23,6 +23,6 @@ export default function AdminPage({
 					{children}
 				</Main>
 			</Wrapper>
-		</AdminRoute>
+		</ProtectedRoute>
 	)
 }

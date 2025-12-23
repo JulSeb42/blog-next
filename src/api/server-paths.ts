@@ -24,6 +24,7 @@ export const SERVER_PATHS = {
 		ROOT: SERVER_PATHS_ROOT.USER,
 		ALL_USERS: "/all-users", // GET
 		USER: (id: string) => `/user/${id}`, // GET
+		USER_SLUG: (slug = ":slug") => `/user-slug/${slug}`, // GET
 		EDIT_ACCOUNT: (id = ":id") => `/edit-account/${id}`, // PUT
 		EDIT_PASSWORD: (id = ":id") => `/edit-password/${id}`, // PUT
 		DELETE_ACCOUNT: (id = ":id") => `/delete-account/${id}`, // DELETE

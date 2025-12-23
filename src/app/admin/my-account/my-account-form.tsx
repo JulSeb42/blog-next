@@ -88,7 +88,7 @@ export function MyAccountForm() {
 				buttonPrimary="Save changes"
 				buttonSecondary={{
 					content: "Cancel",
-					onClick: () => redirect("/my-account"),
+					onClick: () => redirect("/admin"),
 				}}
 				onSubmit={handleSubmit}
 				isLoading={isLoading || isUploading}

@@ -5,6 +5,7 @@ export type UserRole = keyof typeof userRoles
 export type User = {
 	_id: string
 	fullName: string
+	slug: string
 	email: string
 	password: string
 	avatar: string
