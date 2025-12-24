@@ -14,7 +14,16 @@ const LINKS_COMMON = [
 export function AdminNav() {
 	const pathname = usePathname()
 	const { theme, switchTheme } = useLibTheme()
-	const { logout } = useAuth()
+	const { user, logout } = useAuth()
+
+	const filteredLinks = adminNavLinks.filter(link => {
+		if (user.role === "writer") return link.role === "writer"
+
+		if (user.role === "moderator")
+			return link.role === "writer" || link.role === "moderator"
+
+		return link
+	})
 
 	return (
 		<>
@@ -26,11 +35,16 @@ export function AdminNav() {
 				)}
 			>
 				<Flexbox flexDirection="col" element="section">
-					{adminNavLinks.map((link, i) => (
+					{filteredLinks.map((link, i) => (
 						<Tooltip
 							tooltip={link.title}
 							position="right"
-							tooltipClasses="translate-x-6"
+							tooltipClasses={
+								link.title === "Categories" ||
+								link.title === "Comments"
+									? "translate-x-14"
+									: "translate-x-6"
+							}
 							key={i}
 						>
 							<Link

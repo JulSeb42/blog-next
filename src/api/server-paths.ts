@@ -59,6 +59,7 @@ export const SERVER_PATHS = {
 		ROOT: SERVER_PATHS_ROOT.COMMENT,
 		ALL_COMMENTS: "/all-comments", // GET
 		NEW_COMMENT: "/new-comment", // POST
+		DELETE_COMMENT: (id = ":id") => `/delete-comment/${id}`, // DELETE
 	},
 	/* Prepend server path - DO NOT REMOVE */
 }

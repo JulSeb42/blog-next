@@ -36,7 +36,7 @@ const realUsers: Array<Partial<User>> = [
 	},
 	{
 		fullName: "Julien Writer",
-		email: "julien@user.com",
+		email: "julien@writer.com",
 		password: hash,
 		verified: true,
 		verifyToken: getRandomString(20),

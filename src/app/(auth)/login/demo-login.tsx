@@ -42,10 +42,16 @@ export function DemoLogin() {
 		<>
 			<Flexbox gap="xs">
 				<Button
-					onClick={() => handleLogin("user")}
+					onClick={() => handleLogin("writer")}
 					isLoading={isLoading}
 				>
-					Login as user
+					Login as writer
+				</Button>
+				<Button
+					onClick={() => handleLogin("moderator")}
+					isLoading={isLoading}
+				>
+					Login as moderator
 				</Button>
 				<Button
 					onClick={() => handleLogin("admin")}

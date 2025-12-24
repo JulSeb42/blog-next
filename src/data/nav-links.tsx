@@ -1,5 +1,12 @@
-import { BiLayout, BiLinkExternal, BiUser, BiUserCircle } from "react-icons/bi"
-import type { PageType } from "types"
+import {
+	BiCategory,
+	BiLayout,
+	BiLinkExternal,
+	BiMessage,
+	BiUser,
+	BiUserCircle,
+} from "react-icons/bi"
+import type { PageType, UserRole } from "types"
 
 export type NavLink = {
 	title: string
@@ -17,11 +24,24 @@ export const navLinks: Array<NavLink> = [
 
 type AdminNavLink = Omit<NavLink, "type"> & {
 	icon: ReactElement
+	role: UserRole
 }
 
 export const adminNavLinks: Array<AdminNavLink> = [
-	{ title: "Admin", href: "/admin", icon: <BiLayout /> },
-	{ title: "Users", href: "/admin/users", icon: <BiUser /> },
+	{ title: "Posts", href: "/admin", icon: <BiLayout />, role: "writer" },
+	{
+		title: "Categories",
+		href: "/admin/categories",
+		icon: <BiCategory />,
+		role: "writer",
+	},
+	{
+		title: "Comments",
+		href: "/admin/comments",
+		icon: <BiMessage />,
+		role: "moderator",
+	},
+	{ title: "Users", href: "/admin/users", icon: <BiUser />, role: "admin" },
 ]
 
 export const adminNavBottomLinks: Array<AdminNavLink> = [
@@ -29,6 +49,12 @@ export const adminNavBottomLinks: Array<AdminNavLink> = [
 		title: "My account",
 		href: "/admin/my-account",
 		icon: <BiUserCircle />,
+		role: "writer",
 	},
-	{ title: "Back to site", href: "/", icon: <BiLinkExternal /> },
+	{
+		title: "Back to site",
+		href: "/",
+		icon: <BiLinkExternal />,
+		role: "writer",
+	},
 ]

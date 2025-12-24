@@ -89,7 +89,11 @@ export function PostComments({
 			{comments.length ? (
 				<>
 					{comments.map(comment => (
-						<CommentCard comment={comment} key={comment._id} />
+						<CommentCard
+							comment={comment}
+							setComments={setComments}
+							key={comment._id}
+						/>
 					))}
 
 					{loading && <CommentCardSkeleton />}

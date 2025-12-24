@@ -45,6 +45,9 @@ class CommentService {
 	newComment = async (data: NewCommentFormData) =>
 		await http.post(generateRoute("NEW_COMMENT"), data)
 
+	deleteComment = async (id: string): ApiResponse<string> =>
+		await http.delete(generateRoute("DELETE_COMMENT", id))
+
 	/* Prepend route - DO NOT REMOVE */
 }
 
