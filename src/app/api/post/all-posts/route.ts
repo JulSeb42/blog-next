@@ -62,7 +62,14 @@ export async function GET(req: Request) {
 				{ status: 200 },
 			)
 		}
+
 		const posts = await PostModel.find()
+
+		if (!posts)
+			return NextResponse.json(
+				{ message: "Posts not found" },
+				{ status: 404 },
+			)
 
 		return NextResponse.json(posts, { status: 200 })
 	} catch (err) {

@@ -19,7 +19,6 @@ const postSchema = new Schema<Post>(
 		keywords: Array,
 		author: { type: Schema.Types.ObjectId, ref: "User" },
 		category: { type: Schema.Types.ObjectId, ref: "Category" },
-		comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
 	},
 	{ timestamps: true },
 )

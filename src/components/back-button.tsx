@@ -1,23 +1,20 @@
 "use client"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { BiChevronLeft } from "react-icons/bi"
 import { Button } from "@julseb-lib/react"
 
-export function BackButton({ href }: IBackButton) {
+export function BackButton() {
+	const router = useRouter()
+
 	return (
 		<Button
 			variant="transparent"
 			className="p-0"
-			element={Link}
-			// @ts-ignore
-			href={href}
+			onClick={() => router.back()}
+			role="link"
 		>
 			<BiChevronLeft />
-			Back to list
+			Back to previous page
 		</Button>
 	)
-}
-
-interface IBackButton {
-	href: string
 }

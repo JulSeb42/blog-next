@@ -46,7 +46,7 @@ export default async function Category({
 
 	return (
 		<Page type="all">
-			<BackButton href="/categories" />
+			<BackButton />
 			<Text tag="h1">All posts in {category.name}</Text>
 			<PostsList posts={posts} pagination={pagination} />
 		</Page>

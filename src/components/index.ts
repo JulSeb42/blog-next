@@ -16,4 +16,5 @@ export * from "./posts-list"
 export * from "./author-card"
 export * from "./avatar"
 export * from "./back-button"
+export * from "./comment-card"
 /* Prepend export - DO NOT REMOVE */

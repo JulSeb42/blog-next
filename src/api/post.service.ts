@@ -43,6 +43,12 @@ class PostService {
 	featuredPosts = async (): ApiResponse<Array<Post>> =>
 		await http.get(generateRoute("FEATURED_POSTS"))
 
+	post = async (id: string): ApiResponse<Post> =>
+		await http.get(generateRoute("POST", id))
+
+	postSlug = async (slug: string): ApiResponse<Post> =>
+		await http.get(generateRoute("POST_SLUG", slug))
+
 	/* Prepend route - DO NOT REMOVE */
 }
 

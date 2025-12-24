@@ -47,7 +47,7 @@ export default async function Author({
 
 	return (
 		<Page type="all">
-			<BackButton href="/authors" />
+			<BackButton />
 			<AuthorHeader author={user} />
 			<PostsList posts={posts} pagination={pagination} />
 		</Page>

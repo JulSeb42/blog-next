@@ -9,6 +9,7 @@ const commentSchema = new Schema<Comment>(
 	{
 		author: String,
 		body: String,
+		post: { type: Schema.Types.ObjectId, ref: "Post" },
 	},
 	{ timestamps: true },
 )

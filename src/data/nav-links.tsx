@@ -11,6 +11,7 @@ export const navLinks: Array<NavLink> = [
 	{ title: "Posts", href: "/", type: "all" },
 	{ title: "Categories", href: "/categories", type: "all" },
 	{ title: "Authors", href: "/authors", type: "all" },
+	{ title: "Login", href: "/login", type: "anon" },
 	{ title: "Admin", href: "/admin", type: "protected" },
 ]
 

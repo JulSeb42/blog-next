@@ -17,6 +17,7 @@ export default function Page({
 	noWrapper,
 	noMain,
 	mainSize = "large",
+	wrapperElement = "section",
 	...rest
 }: IPage) {
 	const [users, setUsers] = useState<Array<User>>([])
@@ -50,6 +51,7 @@ export default function Page({
 				noWrapper={noWrapper as any}
 				wrapperProps={{
 					className: "mt-21 min-h-fit! h-fit! bg-transparent",
+					element: wrapperElement,
 					...rest.wrapperProps,
 				}}
 				mainProps={{ className: "py-0 bg-transparent", size: mainSize }}
@@ -65,4 +67,5 @@ type IPage = ILibPageLayout & {
 	type: PageType
 	isLoading?: boolean
 	mainSize?: LibMainSize
+	wrapperElement?: ElementType
 }

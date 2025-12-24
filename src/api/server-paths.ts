@@ -46,6 +46,8 @@ export const SERVER_PATHS = {
 		ROOT: SERVER_PATHS_ROOT.POST,
 		ALL_POSTS: "/all-posts", // GET
 		FEATURED_POSTS: "/featured-posts", // GET
+		POST: (id = ":id") => `/post/${id}`, // GET
+		POST_SLUG: (slug = ":slug") => `/post-slug/${slug}`, // GET
 	},
 	CATEGORY: {
 		ROOT: SERVER_PATHS_ROOT.CATEGORY,
@@ -56,6 +58,7 @@ export const SERVER_PATHS = {
 	COMMENT: {
 		ROOT: SERVER_PATHS_ROOT.COMMENT,
 		ALL_COMMENTS: "/all-comments", // GET
+		NEW_COMMENT: "/new-comment", // POST
 	},
 	/* Prepend server path - DO NOT REMOVE */
 }
