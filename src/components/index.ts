@@ -11,4 +11,6 @@ export * from "./not-found-page"
 export * from "./lazy-image"
 export * from "./admin-island"
 export * from "./post-card"
+export * from "./category-card"
+export * from "./posts-list"
 /* Prepend export - DO NOT REMOVE */

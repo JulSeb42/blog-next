@@ -16,7 +16,7 @@ export default function Page({
 	isLoading,
 	noWrapper,
 	noMain,
-	mainSize,
+	mainSize = "large",
 	...rest
 }: IPage) {
 	const [users, setUsers] = useState<Array<User>>([])

@@ -12,6 +12,12 @@ class CategoryService {
 	allCategories = async (): ApiResponse<Array<Category>> =>
 		await http.get(generateRoute("ALL_CATEGORIES"))
 
+	category = async (id: string): ApiResponse<Category> =>
+		await http.get(generateRoute("CATEGORY", id))
+
+	categorySlug = async (slug: string): ApiResponse<Category> =>
+		await http.get(generateRoute("CATEGORY_SLUG", slug))
+
 	/* Prepend route - DO NOT REMOVE */
 }
 

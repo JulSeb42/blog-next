@@ -14,9 +14,9 @@ export function AnonRoute({ children }: IAnonPage) {
 		}
 	}, [isLoggedIn, loading, router])
 
-	if (loading) return <PageLoading />
+	if (loading) return <PageLoading loaderVariant={3} />
 
-	if (isLoggedIn) return <PageLoading />
+	if (isLoggedIn) return <PageLoading loaderVariant={3} />
 
 	return children
 }

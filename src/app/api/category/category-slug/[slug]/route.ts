@@ -2,19 +2,24 @@ import { NextResponse } from "next/server"
 import { connectDb } from "lib/server"
 import { CategoryModel } from "models"
 
-export async function GET() {
+export async function GET(
+	_: any,
+	{ params }: { params: Promise<{ slug: string }> },
+) {
 	await connectDb()
 
 	try {
-		const categories = await CategoryModel.find()
+		const { slug } = await params
 
-		if (!categories)
+		const category = await CategoryModel.findOne({ slug })
+
+		if (!category)
 			return NextResponse.json(
-				{ message: "Categories not found" },
+				{ message: "Category not found" },
 				{ status: 404 },
 			)
 
-		return NextResponse.json(categories, { status: 200 })
+		return NextResponse.json(category, { status: 200 })
 	} catch (err) {
 		console.error(err)
 		return NextResponse.json(

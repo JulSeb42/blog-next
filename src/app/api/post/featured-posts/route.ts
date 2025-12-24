@@ -11,6 +11,12 @@ export async function GET() {
 			createdAt: -1,
 		})
 
+		if (!featuredPosts)
+			return NextResponse.json(
+				{ message: "Posts not found" },
+				{ status: 404 },
+			)
+
 		return NextResponse.json(featuredPosts, { status: 200 })
 	} catch (err) {
 		console.error(err)

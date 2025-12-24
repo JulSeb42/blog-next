@@ -50,6 +50,8 @@ export const SERVER_PATHS = {
 	CATEGORY: {
 		ROOT: SERVER_PATHS_ROOT.CATEGORY,
 		ALL_CATEGORIES: "/all-categories", // GET
+		CATEGORY: (id = ":id") => `/category/${id}`, // GET
+		CATEGORY_SLUG: (slug = ":slug") => `/category-slug/${slug}`, // GET
 	},
 	COMMENT: {
 		ROOT: SERVER_PATHS_ROOT.COMMENT,

@@ -8,6 +8,12 @@ export async function GET() {
 	try {
 		const comments = await CommentModel.find()
 
+		if (!comments)
+			return NextResponse.json(
+				{ message: "Comments not found" },
+				{ status: 404 },
+			)
+
 		return NextResponse.json(comments, { status: 200 })
 	} catch (err) {
 		console.error(err)

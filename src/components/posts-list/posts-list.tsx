@@ -1,16 +1,16 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
 import { Text, Flexbox, deleteDuplicates } from "@julseb-lib/react"
-import { ErrorMessage, PostCard, PostCardSkeleton } from "components"
+import { PostCard, PostCardSkeleton } from "components/post-card"
+import { ErrorMessage } from "components/error-message"
 import { postService } from "api"
+import type { IPostsList } from "./types"
 import type { Post, ServerPagination } from "types"
 
-export function PostsList({
+export default function PostsList({
 	posts: initialPosts,
 	pagination: initialPagination,
 }: IPostsList) {
-	console.log({ initialPagination })
-
 	const [posts, setPosts] = useState(initialPosts)
 	const [pagination, setPagination] = useState(initialPagination)
 	const [loading, setLoading] = useState(false)
@@ -101,9 +101,4 @@ export function PostsList({
 			<ErrorMessage>{errorMessage}</ErrorMessage>
 		</>
 	)
-}
-
-interface IPostsList {
-	posts: Array<Post>
-	pagination: ServerPagination
 }

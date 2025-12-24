@@ -9,7 +9,7 @@ export default function AdminPage({
 	isLoading,
 	mainSize = "large",
 }: IAdminLayout) {
-	if (isLoading) return <PageLoading />
+	if (isLoading) return <PageLoading loaderVariant={3} />
 
 	return (
 		<ProtectedRoute>
