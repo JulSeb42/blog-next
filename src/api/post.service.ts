@@ -14,11 +14,13 @@ class PostService {
 		limit = 20,
 		search,
 		category,
+		author,
 	}: {
 		page?: number
 		limit?: number
 		search?: string
 		category?: string
+		author?: string
 	} = {}): ApiResponse<ResponseInfinitePosts | Array<Post>> => {
 		if (page) {
 			const params = new URLSearchParams({
@@ -28,6 +30,7 @@ class PostService {
 
 			if (search) params.append("search", search)
 			if (category) params.append("category", category)
+			if (author) params.append("author", author)
 
 			return await http.get(
 				`${generateRoute("ALL_POSTS")}?${params.toString()}`,

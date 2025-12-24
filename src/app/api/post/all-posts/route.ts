@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { connectDb } from "lib/server"
-import { PostModel, CategoryModel } from "models"
+import { PostModel, CategoryModel, UserModel } from "models"
 
 export async function GET(req: Request) {
 	await connectDb()
@@ -11,9 +11,14 @@ export async function GET(req: Request) {
 		const limit = Number(searchParams.get("limit")) ?? 20
 		const search = searchParams.get("search")
 		const category = searchParams.get("category")
+		const author = searchParams.get("author")
 
 		const foundCategory = category
 			? await CategoryModel.findOne({ slug: category })
+			: undefined
+
+		const foundAuthor = author
+			? await UserModel.findOne({ slug: author })
 			: undefined
 
 		const filter: any = {}
@@ -25,6 +30,10 @@ export async function GET(req: Request) {
 
 		if (category && foundCategory) {
 			filter.category = foundCategory._id
+		}
+
+		if (author && foundAuthor) {
+			filter.author = foundAuthor._id
 		}
 
 		if (page) {
@@ -53,9 +62,9 @@ export async function GET(req: Request) {
 				{ status: 200 },
 			)
 		}
-		// const posts = await PostModel.find()
+		const posts = await PostModel.find()
 
-		// return NextResponse.json(posts, { status: 200 })
+		return NextResponse.json(posts, { status: 200 })
 	} catch (err) {
 		console.error(err)
 		return NextResponse.json(

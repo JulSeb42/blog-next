@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
-import { Text, Avatar, getInitials, clsx } from "@julseb-lib/react"
-import { LazyImage } from "components/lazy-image"
+import { Text, clsx } from "@julseb-lib/react"
+import { Avatar } from "components/avatar"
 import type { IUserCard } from "./types"
 
 export default function UserCard({ user }: IUserCard) {
@@ -13,21 +13,7 @@ export default function UserCard({ user }: IUserCard) {
 				"hover:scale-105",
 			)}
 		>
-			<Avatar>
-				{user.avatar ? (
-					<LazyImage
-						src={user.avatar}
-						alt={`Avatar ${user.fullName}`}
-						className="w-full h-full object-cover"
-						skeletonAnimation="shine"
-						skeletonClasses="w-full h-full"
-						width={500}
-						height={500}
-					/>
-				) : (
-					getInitials(user.fullName)
-				)}
-			</Avatar>
+			<Avatar user={user} />
 
 			<Text textAlign="center">{user.fullName}</Text>
 		</Link>

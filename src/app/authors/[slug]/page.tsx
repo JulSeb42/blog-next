@@ -1,21 +1,22 @@
 import type { Metadata } from "next"
-import { Text } from "@julseb-lib/react"
 import { Page, PostsList, BackButton } from "components"
-import { categoryService, postService } from "api"
-import type { Category, Post, ServerPagination } from "types"
+import { AuthorHeader } from "./header"
+import { userService, postService } from "api"
+import type { Post, ServerPagination, User } from "types"
 
-async function getCategory(slug: string): Promise<Category> {
-	return await categoryService
-		.categorySlug(slug)
+async function getUser(slug: string): Promise<User> {
+	return await userService
+		.userSlug(slug)
 		.then(res => res.data)
 		.catch(err => err)
 }
 
-async function getCategoryPosts(
+async function getUserPosts(
 	slug: string,
 ): Promise<{ posts: Array<Post>; pagination: ServerPagination }> {
+	console.log({ slug })
 	return await postService
-		.allPosts({ page: 1, limit: 10, category: slug })
+		.allPosts({ page: 1, limit: 10, author: slug })
 		.then(res => res.data)
 		.catch(err => err)
 }
@@ -26,28 +27,28 @@ export async function generateMetadata({
 	params: Promise<{ slug: string }>
 }) {
 	const { slug } = await params
-	const category = await getCategory(slug)
+	const user = await getUser(slug)
 
 	const metadata: Metadata = {
-		title: category.name,
+		title: user.fullName,
 	}
 
 	return metadata
 }
 
-export default async function Category({
+export default async function Author({
 	params,
 }: {
 	params: Promise<{ slug: string }>
 }) {
 	const { slug } = await params
-	const category = await getCategory(slug)
-	const { posts, pagination } = await getCategoryPosts(slug)
+	const user = await getUser(slug)
+	const { posts, pagination } = await getUserPosts(slug)
 
 	return (
 		<Page type="all">
-			<BackButton href="/categories" />
-			<Text tag="h1">All posts in {category.name}</Text>
+			<BackButton href="/authors" />
+			<AuthorHeader author={user} />
 			<PostsList posts={posts} pagination={pagination} />
 		</Page>
 	)

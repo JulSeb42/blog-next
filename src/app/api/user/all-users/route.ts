@@ -11,7 +11,8 @@ export async function GET(req: Request) {
 		const limit = Number(searchParams.get("limit")) ?? 20
 		const search = searchParams.get("search") || ""
 		const role = searchParams.get("role") || ""
-		const fields = searchParams.get("fields") || "_id fullName avatar"
+		const fields =
+			searchParams.get("fields") || "_id fullName avatar bio email slug"
 
 		const filter: any = {}
 

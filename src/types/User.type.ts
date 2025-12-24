@@ -12,6 +12,7 @@ export type User = {
 	_id: string
 	fullName: string
 	slug: string
+	bio: string
 	email: string
 	password: string
 	avatar: string

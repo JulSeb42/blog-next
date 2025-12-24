@@ -32,8 +32,6 @@ export default async function AdminUsers({ searchParams }: PageProps) {
 
 	const usersData = await getUsersData(page, search, role)
 
-	console.log({ usersData })
-
 	return (
 		<AdminPage>
 			<AdminIsland>

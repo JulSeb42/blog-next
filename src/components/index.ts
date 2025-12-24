@@ -13,4 +13,7 @@ export * from "./admin-island"
 export * from "./post-card"
 export * from "./category-card"
 export * from "./posts-list"
+export * from "./author-card"
+export * from "./avatar"
+export * from "./back-button"
 /* Prepend export - DO NOT REMOVE */

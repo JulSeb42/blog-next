@@ -10,11 +10,10 @@ import {
 	Alert,
 	Button,
 	Flexbox,
-	getInitials,
 	clsx,
 	toast,
 } from "@julseb-lib/react"
-import { LazyImage } from "components/lazy-image"
+import { Avatar } from "components/avatar"
 import { useAuth } from "context"
 import { adminService } from "api"
 import type { LibDropdownItem } from "@julseb-lib/react/types"
@@ -57,7 +56,7 @@ export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 		const newRole = user.role === "admin" ? "user" : "admin"
 
 		adminService
-			.editUserRole(user._id, { role: newRole })
+			.editUserRole(user._id, { role: newRole as any })
 			.then(res => {
 				setCurrentUser(res.data)
 				toast.success(`${currentUser.fullName} is now ${newRole}`)
@@ -112,21 +111,10 @@ export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 					"user-card-admin",
 				)}
 			>
-				<div className="top-0 left-0 z-0 absolute flex justify-center items-center bg-primary-500 rounded-xl size-full font-black text-white text-2xl">
-					{currentUser.avatar ? (
-						<LazyImage
-							src={currentUser.avatar}
-							alt={`Avatar ${currentUser.fullName}`}
-							className="rounded-xl size-full"
-							skeletonAnimation="shine"
-							skeletonClasses="w-full h-full"
-							width={500}
-							height={500}
-						/>
-					) : (
-						<span>{getInitials(currentUser.fullName)}</span>
-					)}
-				</div>
+				<Avatar
+					user={currentUser}
+					className="top-0 left-0 z-0 absolute rounded-xl size-full text-2xl"
+				/>
 
 				<span className="block top-0 left-0 z-10 absolute bg-overlay-gradient-black rounded-xl size-full" />
 
@@ -141,7 +129,7 @@ export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 						items={items}
 						isOpen={isOpen}
 						setIsOpen={setIsOpen}
-						className="right-0 left-[unset] w-[140px] -translate-y-2"
+						className="right-0 left-[unset] w-35 -translate-y-2"
 						shadow="md"
 					/>
 				</div>

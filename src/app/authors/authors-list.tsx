@@ -1,22 +1,20 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
-import { Text, Flexbox, deleteDuplicates } from "@julseb-lib/react"
-import { PostCard, PostCardSkeleton } from "components/post-card"
-import { ErrorMessage } from "components/error-message"
-import { postService } from "api"
-import type { IPostsList } from "./types"
-import type { Post, ServerPagination } from "types"
+import { Flexbox, Text, deleteDuplicates } from "@julseb-lib/react"
+import { AuthorCard, ErrorMessage } from "components"
+import { userService } from "api"
+import type { ServerPagination, User } from "types"
 
-export default function PostsList({
-	posts: initialPosts,
+export function AuthorsList({
+	authors: initialAuthors,
 	pagination: initialPagination,
-}: IPostsList) {
-	const [posts, setPosts] = useState(initialPosts)
+}: IAuthorsList) {
+	const [authors, setAuthors] = useState(initialAuthors)
 	const [pagination, setPagination] = useState(initialPagination)
 	const [loading, setLoading] = useState(false)
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-	const loadMorePosts = useCallback(async () => {
+	const loadMoreAuthors = useCallback(async () => {
 		if (loading || !pagination.hasMore) return
 
 		setLoading(true)
@@ -28,26 +26,29 @@ export default function PostsList({
 					pagination.currentPage === 0
 						? 2
 						: pagination.currentPage + 1
-				const response = await postService.allPosts({
+
+				const response = await userService.allUsers({
 					page: nextPage,
 					limit: 12,
 				})
-				const { posts: newPosts, pagination: newPagination } =
+
+				const { users: newUsers, pagination: newPagination } =
 					response.data as {
-						posts: Array<Post>
+						users: Array<User>
 						pagination: ServerPagination
 					}
 
-				setPosts(prev => {
-					const uniqueNewPosts = deleteDuplicates(newPosts)
-					return [...prev, ...uniqueNewPosts]
+				setAuthors(prev => {
+					const uniqueNewAuthors = deleteDuplicates(newUsers)
+
+					return [...prev, ...uniqueNewAuthors]
 				})
 				setPagination(newPagination)
 				setLoading(false)
 			}, 2000)
 		} catch (err) {
-			console.error("Error loading more posts: ", err)
-			setErrorMessage("Failed to load more posts")
+			console.error("Error loading more authors: ", err)
+			setErrorMessage("Failed to load more authors")
 		}
 	}, [loading, pagination])
 
@@ -57,15 +58,14 @@ export default function PostsList({
 		const observer = new IntersectionObserver(
 			entries => {
 				const target = entries[0]
+
 				if (target.isIntersecting && pagination.hasMore && !loading) {
 					if (timeoutId) clearTimeout(timeoutId)
-					timeoutId = setTimeout(() => loadMorePosts(), 500)
+
+					timeoutId = setTimeout(() => loadMoreAuthors(), 500)
 				}
 			},
-			{
-				threshold: 0.1,
-				rootMargin: "100px",
-			},
+			{ threshold: 0.1, rootMargin: "100px" },
 		)
 
 		const sentinel = document.getElementById("load-more-sentinel")
@@ -76,18 +76,16 @@ export default function PostsList({
 			if (timeoutId) clearTimeout(timeoutId)
 			if (sentinel) observer.unobserve(sentinel)
 		}
-	}, [loadMorePosts, pagination?.hasMore, loading])
+	}, [loadMoreAuthors, pagination.hasMore, loading])
 
 	return (
 		<>
-			{posts?.length > 0 ? (
+			{authors.length ? (
 				<>
 					<Flexbox flexDirection="col" gap="md">
-						{deleteDuplicates(posts).map(post => (
-							<PostCard post={post} key={post._id} />
+						{deleteDuplicates(authors).map(author => (
+							<AuthorCard author={author} key={author._id} />
 						))}
-
-						{loading && <PostCardSkeleton />}
 					</Flexbox>
 
 					{pagination.hasMore && (
@@ -95,10 +93,15 @@ export default function PostsList({
 					)}
 				</>
 			) : (
-				<Text>No post yet.</Text>
+				<Text>No author yet.</Text>
 			)}
 
 			<ErrorMessage>{errorMessage}</ErrorMessage>
 		</>
 	)
+}
+
+interface IAuthorsList {
+	authors: Array<User>
+	pagination: ServerPagination
 }

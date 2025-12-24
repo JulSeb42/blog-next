@@ -15,6 +15,8 @@ const userSchema = new Schema<User>(
 		verified: Boolean,
 		verifyToken: String,
 		resetToken: String,
+		bio: String,
+		slug: String,
 	},
 	{ timestamps: true },
 )

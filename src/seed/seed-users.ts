@@ -8,6 +8,7 @@ import {
 	convertToEmail,
 	generateNumbers,
 	getRandom,
+	slugify,
 } from "@julseb-lib/utils"
 import { UserModel } from "models"
 import { userRoles, type User } from "types"
@@ -30,6 +31,8 @@ const realUsers: Array<Partial<User>> = [
 		verifyToken: getRandomString(20),
 		role: "admin",
 		avatar: getRandomAvatar("male"),
+		bio: faker.lorem.paragraph(),
+		slug: "julien-admin",
 	},
 	{
 		fullName: "Julien Writer",
@@ -39,6 +42,8 @@ const realUsers: Array<Partial<User>> = [
 		verifyToken: getRandomString(20),
 		role: "writer",
 		avatar: getRandomAvatar("male"),
+		bio: faker.lorem.paragraph(),
+		slug: "julien-writer",
 	},
 	{
 		fullName: "Julien Moderator",
@@ -48,6 +53,8 @@ const realUsers: Array<Partial<User>> = [
 		verifyToken: getRandomString(20),
 		role: "moderator",
 		avatar: getRandomAvatar("male"),
+		bio: faker.lorem.paragraph(),
+		slug: "julien-moderator",
 	},
 ]
 
@@ -73,6 +80,8 @@ const fakeUsers: Array<Partial<User>> = generateNumbers(0, 3).map(() => {
 		verifyToken: getRandomString(20),
 		avatar: getRandomAvatar(genders as any),
 		role: getRandom(Object.keys(userRoles)) as any,
+		bio: faker.lorem.paragraph(),
+		slug: slugify(fullName),
 	}
 })
 
