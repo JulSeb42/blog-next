@@ -1,0 +1,47 @@
+import type { Metadata } from "next"
+import { SrOnly, Wrapper, Main } from "@julseb-lib/react"
+import { Page } from "components"
+import { FeaturedPosts } from "./(home)/featured-posts"
+import { PostsList } from "./(home)/posts-list"
+import { postService } from "api"
+import { SITE_DATA } from "data"
+import type { Post, ResponseInfinitePosts } from "types"
+
+async function getFeaturedPosts(): Promise<Array<Post>> {
+	return await postService
+		.featuredPosts()
+		.then(res => res.data)
+		.catch(err => err)
+}
+
+async function getPosts(): Promise<ResponseInfinitePosts> {
+	return await postService
+		.allPosts({ limit: 10, page: 1 })
+		.then(res => res.data)
+		.catch(err => err)
+}
+
+export const metadata: Metadata = {
+	title: "Homepage",
+}
+
+export default async function Home() {
+	const featuredPosts = (await getFeaturedPosts()).slice(0, 4)
+	const posts = await getPosts()
+
+	return (
+		<Page type="all" noWrapper>
+			<SrOnly element="h1">Homepage of {SITE_DATA.NAME}</SrOnly>
+			<FeaturedPosts posts={featuredPosts} />
+
+			<Wrapper>
+				<Main size="large">
+					<PostsList
+						posts={posts.posts}
+						pagination={posts.pagination}
+					/>
+				</Main>
+			</Wrapper>
+		</Page>
+	)
+}

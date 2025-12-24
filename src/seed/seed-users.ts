@@ -10,7 +10,7 @@ import {
 	getRandom,
 } from "@julseb-lib/utils"
 import { UserModel } from "models"
-import type { User } from "types"
+import { userRoles, type User } from "types"
 
 // Hash password
 const password = "Password42"
@@ -32,17 +32,26 @@ const realUsers: Array<Partial<User>> = [
 		avatar: getRandomAvatar("male"),
 	},
 	{
-		fullName: "Julien User",
+		fullName: "Julien Writer",
 		email: "julien@user.com",
 		password: hash,
 		verified: true,
 		verifyToken: getRandomString(20),
-		role: "user",
+		role: "writer",
+		avatar: getRandomAvatar("male"),
+	},
+	{
+		fullName: "Julien Moderator",
+		email: "julien@moderator.com",
+		password: hash,
+		verified: true,
+		verifyToken: getRandomString(20),
+		role: "moderator",
 		avatar: getRandomAvatar("male"),
 	},
 ]
 
-const fakeUsers: Array<Partial<User>> = generateNumbers(0, 97).map(() => {
+const fakeUsers: Array<Partial<User>> = generateNumbers(0, 3).map(() => {
 	const genders = getRandom(["male", "female"])
 	const fullName = faker.person
 		.fullName(genders as any)
@@ -63,7 +72,7 @@ const fakeUsers: Array<Partial<User>> = generateNumbers(0, 97).map(() => {
 		verified: true,
 		verifyToken: getRandomString(20),
 		avatar: getRandomAvatar(genders as any),
-		role: "user",
+		role: getRandom(Object.keys(userRoles)) as any,
 	}
 })
 

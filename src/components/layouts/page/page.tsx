@@ -38,7 +38,7 @@ export default function Page({
 				? AnonRoute
 				: Fragment
 
-	if (isLoading || loading) return <PageLoading />
+	if (isLoading || loading) return <PageLoading loaderVariant={3} />
 
 	if (!users.length && pathname !== "/signup") return redirect("/signup")
 

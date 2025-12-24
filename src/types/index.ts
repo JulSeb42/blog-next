@@ -4,4 +4,8 @@ export * from "./PageType.type"
 export * from "./Error.type"
 export * from "./ApiResponse.type"
 export * from "./AdminForms.type"
+export * from "./Post.type"
+export * from "./Category.type"
+export * from "./Comment.type"
+export * from "./ServerPagination.type"
 /* Prepend export - DO NOT REMOVE */

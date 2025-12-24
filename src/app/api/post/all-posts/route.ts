@@ -1,0 +1,66 @@
+import { NextResponse } from "next/server"
+import { connectDb } from "lib/server"
+import { PostModel, CategoryModel } from "models"
+
+export async function GET(req: Request) {
+	await connectDb()
+
+	try {
+		const { searchParams } = new URL(req.url)
+		const page = Number(searchParams.get("page")) ?? 1
+		const limit = Number(searchParams.get("limit")) ?? 20
+		const search = searchParams.get("search")
+		const category = searchParams.get("category")
+
+		const foundCategory = category
+			? await CategoryModel.findOne({ slug: category })
+			: undefined
+
+		const filter: any = {}
+
+		if (search) {
+			filter.title = { $regex: search, $options: "i" }
+			filter.tags = { $regex: search, $options: "i" }
+		}
+
+		if (category && foundCategory) {
+			filter.category = foundCategory._id
+		}
+
+		if (page) {
+			const skip = (page - 1) * limit
+
+			const posts = await PostModel.find(filter)
+				.skip(skip)
+				.limit(limit)
+				.sort({ updatedAt: -1, createdAt: -1 })
+
+			const totalPosts = await PostModel.countDocuments(filter)
+			const totalPages = Math.ceil(totalPosts / limit)
+			const hasMore = page < totalPages
+
+			return NextResponse.json(
+				{
+					posts,
+					pagination: {
+						currentPage: page,
+						totalPages,
+						totalItems: totalPosts,
+						hasMore,
+						limit,
+					},
+				},
+				{ status: 200 },
+			)
+		}
+		// const posts = await PostModel.find()
+
+		// return NextResponse.json(posts, { status: 200 })
+	} catch (err) {
+		console.error(err)
+		return NextResponse.json(
+			{ message: "An error occurred" },
+			{ status: 500 },
+		)
+	}
+}

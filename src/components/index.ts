@@ -10,4 +10,5 @@ export * from "./pagination"
 export * from "./not-found-page"
 export * from "./lazy-image"
 export * from "./admin-island"
+export * from "./post-card"
 /* Prepend export - DO NOT REMOVE */

@@ -1,4 +1,10 @@
-export const userRoles = { user: "user", admin: "admin" } as const
+import type { ServerPagination } from "./ServerPagination.type"
+
+export const userRoles = {
+	writer: "writer",
+	moderator: "moderator",
+	admin: "admin",
+} as const
 
 export type UserRole = keyof typeof userRoles
 
@@ -15,17 +21,9 @@ export type User = {
 	resetToken?: string
 }
 
-export type InfinitePagination = {
-	currentPage: number
-	totalPages: number
-	totalUsers: number
-	hasMore: boolean
-	limit: number
-}
-
 export type ResponseInfiniteUsers = {
 	users: Array<User>
-	pagination: InfinitePagination
+	pagination: ServerPagination
 }
 
 export type EditAccountFormData = Pick<User, "fullName" | "avatar">

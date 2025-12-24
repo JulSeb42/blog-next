@@ -13,12 +13,6 @@ export default (plop: NodePlopAPI) => {
 				type: "input",
 				name: "name",
 				message: "Enter route's name",
-				validate: input => {
-					if (input[input.length - 1] === "s") {
-						return "Name must be singular"
-					}
-					return true
-				},
 			},
 			{
 				type: "list",
@@ -27,6 +21,12 @@ export default (plop: NodePlopAPI) => {
 				choices: async () => {
 					const directories = await getApiDirectories()
 					return [...directories, "Create new directory"]
+				},
+				validate: input => {
+					if (input[input.length - 1] === "s") {
+						return "Name must be singular"
+					}
+					return true
 				},
 			},
 			{

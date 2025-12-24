@@ -9,10 +9,8 @@ const nextConfig: NextConfig = {
 				hostname: "raw.githubusercontent.com",
 				pathname: "/Ashwinvalento/cartoon-avatar/master/lib/images/**",
 			},
-			{
-				protocol: "https",
-				hostname: "res.cloudinary.com",
-			},
+			{ protocol: "https", hostname: "res.cloudinary.com" },
+			{ protocol: "https", hostname: "picsum.photos" },
 		],
 	},
 }

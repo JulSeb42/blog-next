@@ -5,6 +5,9 @@ const SERVER_PATHS_ROOT = {
 	USER: "/user",
 	UPLOADER: "/uploader",
 	ADMIN: "/admin",
+	POST: "/post",
+	CATEGORY: "/category",
+	COMMENT: "/comment",
 	/* Prepend path root - DO NOT REMOVE */
 }
 
@@ -38,6 +41,19 @@ export const SERVER_PATHS = {
 		EDIT_USER_ROLE: (id = ":id") => `/edit-user-role/${id}`, // PUT
 		RESET_PASSWORD: (id = ":id") => `/reset-password/${id}`, // PUT
 		DELETE_USER: (id = ":id") => `/delete-user/${id}`, // DELETE
+	},
+	POST: {
+		ROOT: SERVER_PATHS_ROOT.POST,
+		ALL_POSTS: "/all-posts", // GET
+		FEATURED_POSTS: "/featured-posts", // GET
+	},
+	CATEGORY: {
+		ROOT: SERVER_PATHS_ROOT.CATEGORY,
+		ALL_CATEGORIES: "/all-categories", // GET
+	},
+	COMMENT: {
+		ROOT: SERVER_PATHS_ROOT.COMMENT,
+		ALL_COMMENTS: "/all-comments", // GET
 	},
 	/* Prepend server path - DO NOT REMOVE */
 }
