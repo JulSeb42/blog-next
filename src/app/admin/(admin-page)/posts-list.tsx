@@ -140,7 +140,12 @@ function PostLine({
 	return (
 		<>
 			<Flexbox key={post._id} justifyContent="space-between" gap="xs">
-				<Link href={`/admin/posts/${post._id}`}>{post.title}</Link>
+				<Link
+					href={`/admin/posts/${post._id}`}
+					className="font-bold text-primary-500 hover:text-primary-300 active:text-primary-600"
+				>
+					{post.title}
+				</Link>
 
 				<Flexbox gap="xs">
 					<ButtonIcon
