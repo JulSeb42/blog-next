@@ -9,7 +9,7 @@ import {
 } from "@julseb-lib/react"
 import type { IPagination } from "./types"
 
-export default function Pagination({ page, totalPages }: IPagination) {
+export default function Pagination({ page, totalPages, setPage }: IPagination) {
 	const pathname = usePathname()
 	const router = useRouter()
 	const searchParams = useSearchParams()
@@ -34,15 +34,18 @@ export default function Pagination({ page, totalPages }: IPagination) {
 	const handlePrev = () => {
 		const newPage = currentPage - 1
 		router.push(createPageURL(newPage))
+		if (setPage) setPage(prev => prev - 1)
 	}
 
 	const handleNext = () => {
 		const newPage = currentPage + 1
 		router.push(createPageURL(newPage))
+		if (setPage) setPage(prev => prev + 1)
 	}
 
 	const handlePage = (pageNumber: number) => {
 		router.push(createPageURL(pageNumber))
+		if (setPage) setPage(pageNumber)
 	}
 
 	const getPaginationGroup = () => {

@@ -48,6 +48,7 @@ export const SERVER_PATHS = {
 		FEATURED_POSTS: "/featured-posts", // GET
 		POST: (id = ":id") => `/post/${id}`, // GET
 		POST_SLUG: (slug = ":slug") => `/post-slug/${slug}`, // GET
+		DELETE_POST: (id = ":id") => `/delete-post/${id}`, // DELETE
 	},
 	CATEGORY: {
 		ROOT: SERVER_PATHS_ROOT.CATEGORY,

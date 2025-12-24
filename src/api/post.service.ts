@@ -15,12 +15,14 @@ class PostService {
 		search,
 		category,
 		author,
+		draft,
 	}: {
 		page?: number
 		limit?: number
 		search?: string
 		category?: string
 		author?: string
+		draft?: string
 	} = {}): ApiResponse<ResponseInfinitePosts | Array<Post>> => {
 		if (page) {
 			const params = new URLSearchParams({
@@ -29,8 +31,10 @@ class PostService {
 			})
 
 			if (search) params.append("search", search)
-			if (category) params.append("category", category)
-			if (author) params.append("author", author)
+			if (category && category !== "none")
+				params.append("category", category)
+			if (author && author !== "none") params.append("author", author)
+			if (draft && draft !== "none") params.append("draft", draft)
 
 			return await http.get(
 				`${generateRoute("ALL_POSTS")}?${params.toString()}`,
@@ -48,6 +52,9 @@ class PostService {
 
 	postSlug = async (slug: string): ApiResponse<Post> =>
 		await http.get(generateRoute("POST_SLUG", slug))
+
+	deletePost = async (id: string): ApiResponse<string> =>
+		await http.delete(generateRoute("DELETE_POST", id))
 
 	/* Prepend route - DO NOT REMOVE */
 }

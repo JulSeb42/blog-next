@@ -4,7 +4,7 @@ import Link from "next/link"
 import { BiSun, BiMoon, BiPowerOff } from "react-icons/bi"
 import { Flexbox, Tooltip, clsx, useLibTheme } from "@julseb-lib/react"
 import { adminNavLinks, adminNavBottomLinks } from "data"
-import { useAuth } from "context"
+import { useAuth, useModalOpen } from "context"
 
 const LINKS_COMMON = [
 	"flex items-center gap-1 px-4 py-1 focus:ring-0 text-left w-full rounded-none justify-start text-primary-500 hover:text-primary-300",
@@ -15,6 +15,7 @@ export function AdminNav() {
 	const pathname = usePathname()
 	const { theme, switchTheme } = useLibTheme()
 	const { user, logout } = useAuth()
+	const { hasModalOpen } = useModalOpen()
 
 	const filteredLinks = adminNavLinks.filter(link => {
 		if (user.role === "writer") return link.role === "writer"
@@ -29,7 +30,8 @@ export function AdminNav() {
 		<>
 			<nav
 				className={clsx(
-					"fixed z-40 flex flex-col justify-between py-6 h-calc(100svh-4px) bg-background rounded-xl border border-gray-200 left-1 top-1 h-[calc(100svh-16px)]",
+					"fixed flex flex-col justify-between py-6 h-calc(100svh-4px) bg-background rounded-xl border border-gray-200 left-1 top-1 h-[calc(100svh-16px)]",
+					hasModalOpen ? "z-10" : "z-40",
 					"[&_svg]:size-6",
 					"admin-nav",
 				)}
