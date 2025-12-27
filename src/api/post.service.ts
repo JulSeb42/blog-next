@@ -3,6 +3,7 @@ import { generateServerRoute } from "utils"
 import type { SERVER_PATHS } from "./server-paths"
 import type {
 	ApiResponse,
+	EditPostFormData,
 	NewPostFormData,
 	Post,
 	ResponseInfinitePosts,
@@ -60,6 +61,9 @@ class PostService {
 
 	newPost = async (data: NewPostFormData) =>
 		await http.post(generateRoute("NEW_POST"), data)
+
+	editPost = async (id: string, data: EditPostFormData) =>
+		await http.put(generateRoute("EDIT_POST", id), data)
 
 	deletePost = async (id: string): ApiResponse<string> =>
 		await http.delete(generateRoute("DELETE_POST", id))

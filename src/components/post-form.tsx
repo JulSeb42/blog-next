@@ -49,16 +49,16 @@ export function PostForm({ post }: IPostForm) {
 		title: post?.title ?? "",
 		coverAlt: post?.coverAlt ?? "",
 		category: post?.category ?? "none",
-		tags: post?.tags ?? "",
+		tags: post?.tags.join(",") ?? "",
 		metaDescription: post?.metaDescription ?? "",
-		keywords: post?.keywords ?? "",
+		keywords: post?.keywords.join(",") ?? "",
 	})
 	const [slug, setSlug] = useState(post?.slug ?? "")
 	const [cover, setCover] = useState(post?.cover ?? "")
 	const [isUploading, setIsUploading] = useState(false)
 	const [featured, setFeatured] = useState(false)
 	const [body, setBody] = useState(post?.body ?? "")
-	const [draft, setDraft] = useState(true)
+	const [draft, setDraft] = useState(post?.draft ?? true)
 	const [isLoading, setIsLoading] = useState(false)
 	const [errorMessage, setErrorMessage] = useState<IErrorMessage>(undefined)
 	const [validation, setValidation] = useState<Validation>({
@@ -134,11 +134,24 @@ export function PostForm({ post }: IPostForm) {
 			featured,
 			body,
 			draft,
-			author: (user?._id as any) ?? "",
 		}
 
-		postService
-			.newPost(requestBody)
+		if (post) {
+			return postService
+				.editPost(post._id, requestBody)
+				.then(res =>
+					toast.success(`${res.data.title} has been edited!`),
+				)
+				.then(() => setTimeout(() => redirect("/admin"), 200))
+				.catch(err => {
+					console.error(err)
+					setErrorMessage(err?.response?.data?.message)
+				})
+				.finally(() => setIsLoading(false))
+		}
+
+		return postService
+			.newPost({ ...requestBody, author: user._id as any })
 			.then(() => toast.success("Post has been created"))
 			.then(() => setTimeout(() => redirect("/admin"), 200))
 			.catch(err => {

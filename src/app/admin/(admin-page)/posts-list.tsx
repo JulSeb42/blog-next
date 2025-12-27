@@ -134,7 +134,11 @@ function PostLine({
 				console.error(err)
 				toast.error("An error occurred")
 			})
-			.finally(() => setIsOpen(false))
+			.finally(() => {
+				setIsOpen(false)
+				setHasModalOpen(false)
+				enableScroll()
+			})
 	}
 
 	return (

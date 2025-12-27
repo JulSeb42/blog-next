@@ -40,3 +40,18 @@ export type NewPostFormData = Pick<
 	| "category"
 	| "author"
 >
+
+export type EditPostFormData = Pick<
+	NewPostFormData,
+	| "title"
+	| "slug"
+	| "cover"
+	| "coverAlt"
+	| "featured"
+	| "body"
+	| "tags"
+	| "draft"
+	| "metaDescription"
+	| "keywords"
+	| "category"
+>
