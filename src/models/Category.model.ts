@@ -7,8 +7,8 @@ if (models?.Category) {
 
 const categorySchema = new Schema<Category>(
 	{
-		name: String,
-		slug: String,
+		name: { type: String, unique: true },
+		slug: { type: String, unique: true },
 		cover: String,
 	},
 	{ timestamps: true },

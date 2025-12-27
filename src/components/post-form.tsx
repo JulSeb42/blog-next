@@ -170,7 +170,7 @@ export function PostForm({ post }: IPostForm) {
 						content: "Cancel",
 						onClick: () => redirect("/admin"),
 					}}
-					isLoading={isLoading}
+					isLoading={isLoading || isUploading}
 					onSubmit={handleSubmit}
 				>
 					<Input

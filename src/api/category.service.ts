@@ -1,7 +1,12 @@
 import { http } from "./http-common"
 import { generateServerRoute } from "utils"
 import type { SERVER_PATHS } from "./server-paths"
-import type { ApiResponse, Category } from "types"
+import type {
+	ApiResponse,
+	Category,
+	EditCategoryFormData,
+	NewCategoryFormData,
+} from "types"
 
 type PATHS = keyof typeof SERVER_PATHS.CATEGORY
 
@@ -17,6 +22,15 @@ class CategoryService {
 
 	categorySlug = async (slug: string): ApiResponse<Category> =>
 		await http.get(generateRoute("CATEGORY_SLUG", slug))
+
+	newCategory = async (data: NewCategoryFormData) =>
+		await http.post(generateRoute("NEW_CATEGORY"), data)
+
+	editCategory = async (id: string, data: EditCategoryFormData) =>
+		await http.put(generateRoute("EDIT_CATEGORY", id), data)
+
+	deleteCategory = async (id: string) =>
+		await http.delete(generateRoute("DELETE_CATEGORY", id))
 
 	/* Prepend route - DO NOT REMOVE */
 }

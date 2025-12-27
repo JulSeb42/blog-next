@@ -4,3 +4,7 @@ export type Category = {
 	slug: string
 	cover: string
 }
+
+export type NewCategoryFormData = Pick<Category, "name" | "slug" | "cover">
+
+export type EditCategoryFormData = NewCategoryFormData

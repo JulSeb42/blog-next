@@ -57,6 +57,9 @@ export const SERVER_PATHS = {
 		ALL_CATEGORIES: "/all-categories", // GET
 		CATEGORY: (id = ":id") => `/category/${id}`, // GET
 		CATEGORY_SLUG: (slug = ":slug") => `/category-slug/${slug}`, // GET
+		NEW_CATEGORY: "/new-category", // POST
+		EDIT_CATEGORY: (id = ":id") => `/edit-category/${id}`, // PUT
+		DELETE_CATEGORY: (id = ":id") => `/delete-category/${id}`, // DELETE
 	},
 	COMMENT: {
 		ROOT: SERVER_PATHS_ROOT.COMMENT,

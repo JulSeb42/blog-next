@@ -8,7 +8,7 @@ if (models?.Post) {
 const postSchema = new Schema<Post>(
 	{
 		title: String,
-		slug: String,
+		slug: { type: String, unique: true },
 		cover: String,
 		coverAlt: String,
 		featured: Boolean,

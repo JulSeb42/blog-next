@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server"
 import { connectDb } from "lib/server"
-import { PostModel } from "models"
+import { CategoryModel } from "models"
 
 export async function PUT(
 	req: Request,
-	{
-		params,
-	}: {
-		params: Promise<{ id: string }>
-	},
+	{ params }: { params: Promise<{ id: string }> },
 ) {
 	await connectDb()
 
@@ -16,22 +12,26 @@ export async function PUT(
 		const { id } = await params
 		const requestBody = await req.json()
 
-		const existingPost = await PostModel.findOne({
+		const existingCategory = await CategoryModel.findOne({
 			slug: requestBody.slug,
 			_id: { $ne: id },
 		})
 
-		if (existingPost)
+		if (existingCategory)
 			return NextResponse.json(
-				{ message: "There is already a post with this slug" },
+				{
+					message: "There is already a category with this name",
+				},
 				{ status: 400 },
 			)
 
-		const updatedPost = await PostModel.findByIdAndUpdate(id, requestBody, {
-			new: true,
-		})
+		const updatedCategory = await CategoryModel.findByIdAndUpdate(
+			id,
+			requestBody,
+			{ new: true },
+		)
 
-		return NextResponse.json(updatedPost, { status: 201 })
+		return NextResponse.json(updatedCategory, { status: 201 })
 	} catch (err) {
 		console.error(err)
 		return NextResponse.json(

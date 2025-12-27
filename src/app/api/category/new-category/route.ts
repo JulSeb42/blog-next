@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { connectDb } from "lib/server"
-import { PostModel } from "models"
+import { CategoryModel } from "models"
 
 export async function POST(req: Request) {
 	await connectDb()
@@ -8,17 +8,21 @@ export async function POST(req: Request) {
 	try {
 		const requestBody = await req.json()
 
-		const existingPost = await PostModel.findOne({ slug: requestBody.slug })
+		const existingCategory = await CategoryModel.findOne({
+			slug: requestBody.slug,
+		})
 
-		if (existingPost)
+		if (existingCategory)
 			return NextResponse.json(
-				{ message: "There is already a post with this slug" },
+				{
+					message: "There is already a category with this name",
+				},
 				{ status: 400 },
 			)
 
-		const newPost = await PostModel.create(requestBody)
+		const newCategory = await CategoryModel.create(requestBody)
 
-		return NextResponse.json(newPost, { status: 201 })
+		return NextResponse.json(newCategory, { status: 201 })
 	} catch (err) {
 		console.error(err)
 		return NextResponse.json(
