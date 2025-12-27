@@ -1,17 +1,19 @@
 import type { Metadata } from "next"
 import { Text } from "@julseb-lib/react"
-import { AdminPage, AdminIsland } from "components"
+import { AdminPage, AdminIsland, PostForm } from "components"
 
 export const metadata: Metadata = {
-	title: "{{ title }}",
+	title: "New Post",
 }
 
-export default{{#if async}} async{{/if}} function Admin{{>pascalName}}() {
+export default function AdminNewPost() {
 	return (
 		<AdminPage>
 			<AdminIsland>
-				<Text tag="h1">{{ title }}</Text>
+				<Text tag="h1">New Post</Text>
 			</AdminIsland>
+
+			<PostForm />
 		</AdminPage>
 	)
 }

@@ -1,7 +1,12 @@
 import { http } from "./http-common"
 import { generateServerRoute } from "utils"
 import type { SERVER_PATHS } from "./server-paths"
-import type { ApiResponse, Post, ResponseInfinitePosts } from "types"
+import type {
+	ApiResponse,
+	NewPostFormData,
+	Post,
+	ResponseInfinitePosts,
+} from "types"
 
 type PATHS = keyof typeof SERVER_PATHS.POST
 
@@ -52,6 +57,9 @@ class PostService {
 
 	postSlug = async (slug: string): ApiResponse<Post> =>
 		await http.get(generateRoute("POST_SLUG", slug))
+
+	newPost = async (data: NewPostFormData) =>
+		await http.post(generateRoute("NEW_POST"), data)
 
 	deletePost = async (id: string): ApiResponse<string> =>
 		await http.delete(generateRoute("DELETE_POST", id))

@@ -24,3 +24,19 @@ export type ResponseInfinitePosts = {
 	posts: Array<Post>
 	pagination: ServerPagination
 }
+
+export type NewPostFormData = Pick<
+	Post,
+	| "title"
+	| "slug"
+	| "cover"
+	| "coverAlt"
+	| "featured"
+	| "body"
+	| "tags"
+	| "draft"
+	| "metaDescription"
+	| "keywords"
+	| "category"
+	| "author"
+>
