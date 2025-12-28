@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { BiDotsHorizontalRounded } from "react-icons/bi"
 import {
@@ -13,21 +13,26 @@ import {
 	clsx,
 	toast,
 	capitalize,
+	disableScroll,
+	enableScroll,
 } from "@julseb-lib/react"
 import { Avatar } from "components/avatar"
-import { useAuth } from "context"
+import { useAuth, useModalOpen } from "context"
 import { adminService } from "api"
 import type { LibDropdownItem } from "@julseb-lib/react/types"
 import type { IUserCardAdmin } from "./types"
+import type { UserRole } from "types"
 
 export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 	const { user: admin } = useAuth()
+	const { setHasModalOpen } = useModalOpen()
 
 	const [currentUser, setCurrentUser] = useState(user)
 	const [isOpen, setIsOpen] = useState(false)
 	const [isRoleOpen, setIsRoleOpen] = useState(false)
 	const [isResetOpen, setIsResetOpen] = useState(false)
 	const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+	const [newRole, setNewRole] = useState<"none" | UserRole>("none")
 
 	const items: Array<LibDropdownItem> = [
 		{
@@ -37,9 +42,34 @@ export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 			href: `/users/${currentUser._id}`,
 		},
 		{
-			content: `Set as ${currentUser?.role === "admin" ? "user" : "admin"}`,
-			onClick: () => setIsRoleOpen(true),
-			disabled: currentUser?._id === admin?._id,
+			content: `Set as writer`,
+			onClick: () => {
+				setIsRoleOpen(true)
+				setNewRole("writer")
+			},
+			disabled:
+				currentUser?._id === admin?._id ||
+				currentUser?.role === "writer",
+		},
+		{
+			content: `Set as moderator`,
+			onClick: () => {
+				setIsRoleOpen(true)
+				setNewRole("moderator")
+			},
+			disabled:
+				currentUser?._id === admin?._id ||
+				currentUser?.role === "moderator",
+		},
+		{
+			content: `Set as admin`,
+			onClick: () => {
+				setIsRoleOpen(true)
+				setNewRole("admin")
+			},
+			disabled:
+				currentUser?._id === admin?._id ||
+				currentUser?.role === "admin",
 		},
 		{
 			content: "Reset password",
@@ -53,11 +83,9 @@ export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 		},
 	]
 
-	const handleRole = () => {
-		const newRole = user.role === "admin" ? "user" : "admin"
-
+	const handleRole = (role: UserRole) => {
 		adminService
-			.editUserRole(user._id, { role: newRole as any })
+			.editUserRole(user._id, { role })
 			.then(res => {
 				setCurrentUser(res.data)
 				toast.success(`${currentUser.fullName} is now ${newRole}`)
@@ -102,6 +130,16 @@ export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 				setIsOpen(false)
 			})
 	}
+
+	useEffect(() => {
+		if (isRoleOpen || isResetOpen || isDeleteOpen) {
+			setHasModalOpen(true)
+			disableScroll()
+		} else {
+			setHasModalOpen(false)
+			enableScroll()
+		}
+	}, [isRoleOpen, isResetOpen, isDeleteOpen])
 
 	return (
 		<>
@@ -191,11 +229,14 @@ export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 				<Alert color="danger">
 					<Text>
 						Are you sure you want to set {currentUser.fullName} as{" "}
-						{currentUser.role === "admin" ? "a user" : "an admin"}?
+						{newRole}?
 					</Text>
 
 					<Flexbox gap="md">
-						<Button color="danger" onClick={handleRole}>
+						<Button
+							color="danger"
+							onClick={() => handleRole(newRole as UserRole)}
+						>
 							Yes, change their role
 						</Button>
 						<Button
