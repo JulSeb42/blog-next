@@ -11,6 +11,8 @@ import {
 	Form,
 	Alert,
 	Button,
+	SkeletonCard,
+	Skeleton,
 	disableScroll,
 	enableScroll,
 	slugify,
@@ -23,10 +25,21 @@ import { categoryService } from "api"
 import type { LibValidationStatus } from "@julseb-lib/react/types"
 import type { Category, IErrorMessage } from "types"
 
-export function CategoriesList({
-	categories: initialCategories,
-}: ICategoriesList) {
-	const [categories, setCategories] = useState(initialCategories)
+export function CategoriesList() {
+	const [categories, setCategories] = useState<Array<Category>>([])
+	const [isLoading, setIsLoading] = useState(true)
+	const [errorMessage, setErrorMessage] = useState<IErrorMessage>(undefined)
+
+	useEffect(() => {
+		categoryService
+			.allCategories()
+			.then(res => setCategories(res.data))
+			.catch(err => {
+				console.error(err)
+				setErrorMessage(err?.response?.data?.message)
+			})
+			.finally(() => setIsLoading(false))
+	}, [])
 
 	const [search, setSearch] = useState("")
 
@@ -50,7 +63,15 @@ export function CategoriesList({
 			</AdminIsland>
 
 			<AdminIsland className="flex flex-col gap-4">
-				{!categories.length ? (
+				{isLoading ? (
+					<>
+						<CategoryLineSkeleton />
+						<Hr />
+						<CategoryLineSkeleton />
+						<Hr />
+						<CategoryLineSkeleton />
+					</>
+				) : !categories.length ? (
 					<Text>No category yet.</Text>
 				) : filteredCategories.length ? (
 					filteredCategories.map((category, i) => (
@@ -67,12 +88,10 @@ export function CategoriesList({
 					<Text>Your search did not return any result.</Text>
 				)}
 			</AdminIsland>
+
+			<ErrorMessage>{errorMessage}</ErrorMessage>
 		</>
 	)
-}
-
-interface ICategoriesList {
-	categories: Array<Category>
 }
 
 function CategoryLine({ category, setCategories }: ICategoryLine) {
@@ -260,4 +279,17 @@ interface ICategoryLine {
 type Validation = {
 	name: LibValidationStatus
 	cover: LibValidationStatus
+}
+
+function CategoryLineSkeleton() {
+	return (
+		<SkeletonCard isShiny justifyContent="space-between" gap="xs">
+			<Skeleton className="w-[70%] h-6" />
+
+			<Flexbox gap="xs">
+				<Skeleton className="rounded-full size-6" />
+				<Skeleton className="rounded-full size-6" />
+			</Flexbox>
+		</SkeletonCard>
+	)
 }
