@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-	const featuredPosts = (await getFeaturedPosts()).slice(0, 4)
+	const featuredPosts = await getFeaturedPosts()
 	const posts = await getPosts()
 
 	return (
