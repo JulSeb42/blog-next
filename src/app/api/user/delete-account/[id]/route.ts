@@ -10,7 +10,6 @@ export async function DELETE(
 
 	try {
 		const { id } = await params
-		console.log({ id })
 
 		await UserModel.findByIdAndDelete(id)
 

@@ -14,8 +14,6 @@ export async function GET(req: Request) {
 		const author = searchParams.get("author")
 		const draft = searchParams.get("draft")
 
-		console.log({ search })
-
 		const foundCategory = category
 			? await CategoryModel.findOne({ slug: category })
 			: undefined
@@ -27,8 +25,10 @@ export async function GET(req: Request) {
 		const filter: any = {}
 
 		if (search) {
-			filter.title = { $regex: search, $options: "i" }
-			// filter.tags = { $regex: search, $options: "i" }
+			filter.$or = [
+				{ title: { $regex: search, $options: "i" } },
+				{ tags: { $regex: search, $options: "i" } },
+			]
 		}
 
 		if (category && foundCategory) {

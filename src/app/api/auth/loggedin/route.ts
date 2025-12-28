@@ -5,7 +5,6 @@ import { UserModel } from "models"
 export async function GET() {
 	try {
 		const token = await ServerCookies.getAuthToken()
-		console.log({ token })
 
 		if (!token) {
 			return NextResponse.json({ loggedIn: false, message: "No token" })

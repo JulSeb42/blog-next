@@ -1,20 +1,30 @@
 "use client"
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { BiMoon, BiSun } from "react-icons/bi"
-import { ButtonIcon, Burger, clsx, useLibTheme } from "@julseb-lib/react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { BiMoon, BiSearch, BiSun } from "react-icons/bi"
+import { ButtonIcon, Burger, Input, clsx, useLibTheme } from "@julseb-lib/react"
 import { navLinks, SITE_DATA } from "data"
 import { useAuth, useModalOpen } from "context"
 
 export function Header() {
+	const router = useRouter()
 	const pathname = usePathname()
+	const searchParams = useSearchParams()
 	const { theme, switchTheme } = useLibTheme()
 	const { isLoggedIn, logout } = useAuth()
 	const { hasModalOpen } = useModalOpen()
 
 	const [isScrolled, setIsScrolled] = useState(false)
 	const [isOpen, setIsOpen] = useState(false)
+
+	const [search, setSearch] = useState(searchParams.get("search") ?? "")
+
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault()
+		if (search.trim())
+			router.push(`/search?search=${encodeURIComponent(search.trim())}`)
+	}
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -61,7 +71,7 @@ export function Header() {
 						"flex items-center gap-4",
 						"absolute md:relative bg-background shadow-md md:shadow-none! flex-col md:flex-row items-start md:items-center  px-4 py-2 md:px-0 md:py-0 rounded-2xl transition-all duration-200 ease h-[calc(100svh-68px-32px-12px)] md:h-[unset] top-20 md:top-[unset] w-50 md:w-[unset]",
 						isOpen
-							? "right-0 md:right-[unset]"
+							? "right-8 md:right-[unset]"
 							: "-right-60 md:right-[unset]",
 					)}
 				>
@@ -70,7 +80,7 @@ export function Header() {
 							href={link.href}
 							className={clsx(
 								"text-font hover:text-primary-300 active:text-primary-600",
-								"[&.active]:font-black",
+								"[&.active]:font-black translate-y-1.5",
 								pathname === "/" && link.href === "/"
 									? "active"
 									: link.href !== "/" &&
@@ -86,7 +96,7 @@ export function Header() {
 					{isLoggedIn && (
 						<button
 							onClick={logout}
-							className="hover:text-primary-300 active:text-primary-600 text-left"
+							className="hover:text-primary-300 active:text-primary-600 text-left translate-y-1.5"
 						>
 							Logout
 						</button>
@@ -95,9 +105,21 @@ export function Header() {
 					<ButtonIcon
 						icon={theme === "dark" ? <BiSun /> : <BiMoon />}
 						onClick={switchTheme}
-						className="focus:ring-0 size-6 text-font"
+						className="focus:ring-0 size-6 text-font translate-y-1.5"
 						variant="transparent"
 					/>
+
+					<form className="translate-y-0.5" onSubmit={handleSubmit}>
+						<Input
+							id="search"
+							value={search}
+							onChange={e => setSearch(e.target.value)}
+							inputVariant="pill"
+							placeholder="Search post by title or tag"
+							icon={<BiSearch />}
+							className="w-70"
+						/>
+					</form>
 				</nav>
 			</header>
 

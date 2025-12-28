@@ -14,7 +14,6 @@ async function getUser(slug: string): Promise<User> {
 async function getUserPosts(
 	slug: string,
 ): Promise<{ posts: Array<Post>; pagination: ServerPagination }> {
-	console.log({ slug })
 	return await postService
 		.allPosts({ page: 1, limit: 10, author: slug })
 		.then(res => res.data)

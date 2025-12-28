@@ -13,6 +13,12 @@ export default function PostsList({
 }: IPostsList) {
 	const [posts, setPosts] = useState(initialPosts)
 	const [pagination, setPagination] = useState(initialPagination)
+
+	useEffect(() => {
+		setPosts(initialPosts)
+		setPagination(initialPagination)
+	}, [initialPosts, initialPagination])
+
 	const [loading, setLoading] = useState(false)
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
