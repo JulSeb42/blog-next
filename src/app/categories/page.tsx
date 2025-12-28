@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
-import { Text, Grid } from "@julseb-lib/react"
-import { Page, CategoryCard } from "components"
+import { Text } from "@julseb-lib/react"
+import { Page } from "components"
+import { CategoriesList } from "./categories-list"
 import { categoryService } from "api"
 import type { Category } from "types"
 
@@ -22,11 +23,7 @@ export default async function Categories() {
 		<Page type="all">
 			<Text tag="h1">Categories</Text>
 
-			<Grid cols={2} gap="md">
-				{categories?.map(category => (
-					<CategoryCard category={category} key={category._id} />
-				))}
-			</Grid>
+			<CategoriesList categories={categories} />
 		</Page>
 	)
 }
