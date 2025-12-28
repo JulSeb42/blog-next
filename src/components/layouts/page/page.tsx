@@ -46,7 +46,7 @@ export default function Page({
 	return (
 		<Element>
 			<PageLayout
-				header={users.length && <Header />}
+				header={users.length ? <Header /> : null}
 				noMain={noMain as any}
 				noWrapper={noWrapper as any}
 				wrapperProps={{
