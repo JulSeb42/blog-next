@@ -23,7 +23,7 @@ export default function AuthorCard({ author }: IAuthorCard) {
 			<Text>{author.bio}</Text>
 
 			<Text className="flex items-center gap-2 font-bold text-primary-500">
-				See their post <BiChevronRight />
+				See their posts <BiChevronRight />
 			</Text>
 		</Link>
 	)
