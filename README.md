@@ -2,6 +2,10 @@
 
 A modern, full-featured blog platform built with Next.js, TypeScript, and MongoDB.
 
+## Demo
+
+[Find the demo here]()
+
 ## Features
 
 - Next.js 16 app directory structure
