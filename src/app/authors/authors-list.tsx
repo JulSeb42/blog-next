@@ -15,7 +15,7 @@ export function AuthorsList({
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
 	const loadMoreAuthors = useCallback(async () => {
-		if (loading || !pagination.hasMore) return
+		if (loading || !pagination?.hasMore) return
 
 		setLoading(true)
 		setErrorMessage(null)
@@ -59,7 +59,7 @@ export function AuthorsList({
 			entries => {
 				const target = entries[0]
 
-				if (target.isIntersecting && pagination.hasMore && !loading) {
+				if (target.isIntersecting && pagination?.hasMore && !loading) {
 					if (timeoutId) clearTimeout(timeoutId)
 
 					timeoutId = setTimeout(() => loadMoreAuthors(), 500)
@@ -76,7 +76,7 @@ export function AuthorsList({
 			if (timeoutId) clearTimeout(timeoutId)
 			if (sentinel) observer.unobserve(sentinel)
 		}
-	}, [loadMoreAuthors, pagination.hasMore, loading])
+	}, [loadMoreAuthors, pagination?.hasMore, loading])
 
 	return (
 		<>
@@ -88,7 +88,7 @@ export function AuthorsList({
 						))}
 					</Flexbox>
 
-					{pagination.hasMore && (
+					{pagination?.hasMore && (
 						<span id="load-more-sentinel" style={{ height: 1 }} />
 					)}
 				</>
