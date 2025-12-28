@@ -34,7 +34,7 @@ export function SearchPosts({ inputs, setInputs, setPage }: ISearchPosts) {
 
 	return (
 		<AdminIsland>
-			<form className="gap-4 grid grid-cols-2 w-full">
+			<search className="gap-4 grid grid-cols-2 w-full">
 				<Input
 					id="search"
 					label="Search by title or tag"
@@ -86,7 +86,7 @@ export function SearchPosts({ inputs, setInputs, setPage }: ISearchPosts) {
 					<option value="true">Draft</option>
 					<option value="false">Published</option>
 				</Input>
-			</form>
+			</search>
 		</AdminIsland>
 	)
 }

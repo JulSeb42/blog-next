@@ -11,14 +11,18 @@ export async function GET(req: Request) {
 		const limit = Number(searchParams.get("limit")) ?? 10
 		const post = searchParams.get("post")
 
-		const foundPost = post
-			? await PostModel.findOne({ slug: post })
+		const foundPosts = post
+			? await PostModel.find({
+					title: { $regex: post, $options: "i" },
+				})
 			: undefined
 
 		const filter: any = {}
 
-		if (post && foundPost) {
-			filter.post = foundPost._id
+		if (post && foundPosts && foundPosts.length > 0) {
+			filter.post = { $in: foundPosts.map(p => p._id) }
+		} else if (post && (!foundPosts || foundPosts.length === 0)) {
+			filter.post = { $in: [] }
 		}
 
 		if (page) {
@@ -28,6 +32,7 @@ export async function GET(req: Request) {
 				.skip(skip)
 				.limit(limit)
 				.sort({ createdAt: -1 })
+				.populate("post")
 
 			const totalComments = await CommentModel.countDocuments(filter)
 			const totalPages = Math.ceil(totalComments / limit)

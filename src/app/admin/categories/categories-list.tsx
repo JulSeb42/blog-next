@@ -38,7 +38,7 @@ export function CategoriesList({
 		<>
 			<NewCategory setCategories={setCategories} />
 
-			<AdminIsland className="grid grid-cols-2">
+			<AdminIsland element="search" className="grid grid-cols-2">
 				<Input
 					id="search"
 					type="search"
