@@ -26,7 +26,8 @@ export function UsersFilters({
 				type="select"
 			>
 				<option value="none">None</option>
-				<option value="user">User</option>
+				<option value="writer">Writer</option>
+				<option value="moderator">Moderator</option>
 				<option value="admin">Admin</option>
 			</Input>
 		</AdminIsland>

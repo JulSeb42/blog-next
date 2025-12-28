@@ -1,9 +1,15 @@
 "use client"
 import { useState, useEffect } from "react"
-import { useRouter, usePathname, useSearchParams } from "next/navigation"
+import {
+	useRouter,
+	usePathname,
+	useSearchParams,
+	redirect,
+} from "next/navigation"
 import { Text, Grid, useDebounce } from "@julseb-lib/react"
 import { UserCardAdmin, Pagination, AdminIsland } from "components"
 import { UsersFilters, type UserFilter } from "./filters"
+import { useAuth } from "context"
 import type { ResponseInfiniteUsers } from "types"
 
 export function UsersList({
@@ -14,6 +20,7 @@ export function UsersList({
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
+	const { user } = useAuth()
 
 	const [users, setUsers] = useState(initialData.users)
 	const [pagination, setPagination] = useState(initialData.pagination)
@@ -78,6 +85,8 @@ export function UsersList({
 		const url = createURL(search, filterValue, 1)
 		router.push(url)
 	}
+
+	if (user?.role !== "admin") redirect("/admin")
 
 	return (
 		<>

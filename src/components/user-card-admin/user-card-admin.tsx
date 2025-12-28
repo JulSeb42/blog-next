@@ -12,6 +12,7 @@ import {
 	Flexbox,
 	clsx,
 	toast,
+	capitalize,
 } from "@julseb-lib/react"
 import { Avatar } from "components/avatar"
 import { useAuth } from "context"
@@ -136,11 +137,9 @@ export default function UserCardAdmin({ user, setUsers }: IUserCardAdmin) {
 
 				<div className="z-20 relative flex flex-col justify-end items-start p-2 size-full">
 					<Text color="white">{currentUser.fullName}</Text>
-					{currentUser.role === "admin" && (
-						<Text tag="small" color="gray-300">
-							Admin
-						</Text>
-					)}
+					<Text tag="small" color="gray-300">
+						{capitalize(currentUser.role)}
+					</Text>
 				</div>
 			</div>
 
