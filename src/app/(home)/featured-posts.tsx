@@ -8,7 +8,7 @@ export function FeaturedPosts({ posts }: IFeaturedPosts) {
 	return (
 		<section
 			className={clsx(
-				"gap-4 grid grid-cols-2 mt-21 p-4 h-[calc(100svh-84px-48px)]",
+				"gap-4 grid md:grid-cols-2 mt-21 p-4 md:h-[calc(100svh-84px-48px)]",
 			)}
 		>
 			<Link

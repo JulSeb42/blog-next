@@ -15,7 +15,11 @@ export default function AdminPage({
 		<ProtectedRoute>
 			<AdminNav />
 
-			<Wrapper className={clsx("bg-gray-100 mx-[calc(auto+12px)] py-12")}>
+			<Wrapper
+				className={clsx(
+					"bg-gray-100 mx-[calc(auto+12px)] ml-10.5 py-12 w-[calc(100%-42px)]",
+				)}
+			>
 				<Main
 					className={clsx("relative bg-transparent w-full")}
 					size={mainSize}

@@ -10,12 +10,12 @@ export function AdminHeader() {
 	return (
 		<AdminIsland
 			justifyContent="space-between"
-			alignItems="center"
 			gap="xs"
+			className="md:flex-row flex-col items-start md:items-center gap-2"
 		>
 			<Text tag="h1">Hello {user?.fullName}</Text>
 			<Button
-				className="self-center"
+				className="md:self-center"
 				element={Link}
 				// @ts-ignore
 				href={`/admin/posts/new-post`}

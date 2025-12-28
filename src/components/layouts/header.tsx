@@ -69,10 +69,10 @@ export function Header() {
 				<nav
 					className={clsx(
 						"flex items-center gap-4",
-						"absolute md:relative bg-background shadow-md md:shadow-none! flex-col md:flex-row items-start md:items-center  px-4 py-2 md:px-0 md:py-0 rounded-2xl transition-all duration-200 ease h-[calc(100svh-68px-32px-12px)] md:h-[unset] top-20 md:top-[unset] w-50 md:w-[unset]",
+						"absolute md:relative bg-background shadow-md md:shadow-none! flex-col md:flex-row items-start md:items-center  px-4 py-2 md:px-0 md:py-0 rounded-2xl transition-all duration-200 ease h-[calc(100svh-68px-32px-12px)] md:h-[unset] top-20 md:top-[unset] w-70 md:w-[unset]",
 						isOpen
-							? "right-8 md:right-[unset]"
-							: "-right-60 md:right-[unset]",
+							? "right-0 md:right-[unset]"
+							: "-right-75 md:right-[unset]",
 					)}
 				>
 					{links.map((link, i) => (
@@ -109,7 +109,10 @@ export function Header() {
 						variant="transparent"
 					/>
 
-					<form className="translate-y-0.5" onSubmit={handleSubmit}>
+					<form
+						className="w-full md:max-w-[unset]! translate-y-0.5"
+						onSubmit={handleSubmit}
+					>
 						<Input
 							id="search"
 							value={search}
@@ -117,7 +120,7 @@ export function Header() {
 							inputVariant="pill"
 							placeholder="Search post by title or tag"
 							icon={<BiSearch />}
-							className="w-70"
+							className="w-full md:w-90"
 						/>
 					</form>
 				</nav>

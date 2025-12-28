@@ -34,7 +34,7 @@ export function SearchPosts({ inputs, setInputs, setPage }: ISearchPosts) {
 
 	return (
 		<AdminIsland>
-			<search className="gap-4 grid grid-cols-2 w-full">
+			<search className="gap-4 grid md:grid-cols-2 w-full">
 				<Input
 					id="search"
 					label="Search by title or tag"

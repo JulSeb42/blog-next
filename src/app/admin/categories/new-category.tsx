@@ -76,9 +76,12 @@ export function NewCategory({ setCategories }: INewCategory) {
 
 	return (
 		<>
-			<AdminIsland className="flex justify-between items-center">
+			<AdminIsland className="flex md:flex-row flex-col justify-between items-start! md:items-center gap-2">
 				<Text tag="h1">Categories</Text>
-				<Button className="self-center" onClick={() => setIsOpen(true)}>
+				<Button
+					className="md:self-center"
+					onClick={() => setIsOpen(true)}
+				>
 					New category
 				</Button>
 			</AdminIsland>

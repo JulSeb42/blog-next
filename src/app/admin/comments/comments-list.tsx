@@ -161,10 +161,14 @@ function CommentLine({ comment, setComments }: ICommentLine) {
 
 	return (
 		<>
-			<Flexbox justifyContent="space-between" gap="xs">
-				<Text className="w-1/3">{comment.body}</Text>
+			<Flexbox
+				justifyContent="space-between"
+				className="md:flex-row flex-col"
+				gap="xs"
+			>
+				<Text className="md:w-1/3">{comment.body}</Text>
 
-				<Text className="w-1/3">
+				<Text className="md:w-1/3">
 					<Link href={comment.post.slug}>{comment.post.title}</Link>
 				</Text>
 
