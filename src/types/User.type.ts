@@ -27,7 +27,7 @@ export type ResponseInfiniteUsers = {
 	pagination: ServerPagination
 }
 
-export type EditAccountFormData = Pick<User, "fullName" | "avatar">
+export type EditAccountFormData = Pick<User, "fullName" | "avatar" | "bio">
 
 export type EditPasswordFormData = {
 	oldPassword: string

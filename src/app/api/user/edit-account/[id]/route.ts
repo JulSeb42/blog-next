@@ -45,7 +45,7 @@ export async function PUT(
 			)
 		}
 
-		const { fullName, avatar } = await req.json()
+		const { fullName, avatar, ...requestBody } = await req.json()
 
 		if (!fullName || fullName.trim().length === 0) {
 			return NextResponse.json(
@@ -59,6 +59,7 @@ export async function PUT(
 			{
 				fullName: fullName.trim(),
 				...(avatar && { avatar }),
+				...requestBody,
 			},
 			{
 				new: true,

@@ -13,6 +13,7 @@ export function MyAccountForm() {
 
 	const [inputs, setInputs] = useState({
 		fullName: "",
+		bio: "",
 	})
 	const [avatar, setAvatar] = useState("")
 	const [validation, setValidation] = useState<{
@@ -26,7 +27,7 @@ export function MyAccountForm() {
 
 	useEffect(() => {
 		if (user) {
-			setInputs({ fullName: user.fullName || "" })
+			setInputs({ fullName: user.fullName || "", bio: user.bio || "" })
 			setAvatar(user.avatar || "")
 			setIsLoading(false)
 		} else {
@@ -38,7 +39,9 @@ export function MyAccountForm() {
 		throw new Error("No user data available")
 	}
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
 		const { id, value } = e.target
 
 		setInputs({ ...inputs, [id]: value })
@@ -92,6 +95,7 @@ export function MyAccountForm() {
 				}}
 				onSubmit={handleSubmit}
 				isLoading={isLoading || isUploading}
+				className="w-full"
 			>
 				<Input
 					id="fullName"
@@ -111,6 +115,14 @@ export function MyAccountForm() {
 					disabled
 					aria-disabled
 					helperBottom="You can not edit your email."
+				/>
+
+				<Input
+					id="bio"
+					label="Bio"
+					value={inputs.bio}
+					onChange={handleChange}
+					type="textarea"
 				/>
 
 				<ImageUploader
