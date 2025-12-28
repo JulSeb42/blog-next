@@ -23,7 +23,7 @@ export default async function Categories() {
 			<Text tag="h1">Categories</Text>
 
 			<Grid cols={2} gap="md">
-				{categories.map(category => (
+				{categories?.map(category => (
 					<CategoryCard category={category} key={category._id} />
 				))}
 			</Grid>
