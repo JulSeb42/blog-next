@@ -1,8 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
-import Link from "next/link"
 import { redirect } from "next/navigation"
-import { Form, Input, InputCheck, Text } from "@julseb-lib/react"
+import { Form, Input, InputCheck } from "@julseb-lib/react"
 import { ErrorMessage } from "components"
 import { authService, userService } from "api"
 import { useAuth } from "context"
@@ -53,6 +52,8 @@ export function SignupForm() {
 			})
 	}
 
+	if (allUsers.length) return redirect("/login")
+
 	return (
 		<>
 			<Form
@@ -96,13 +97,6 @@ export function SignupForm() {
 			</Form>
 
 			<ErrorMessage>{errorMessage}</ErrorMessage>
-
-			{allUsers.length && (
-				<Text>
-					You already have an account?{" "}
-					<Link href="/login">Log in.</Link>
-				</Text>
-			)}
 		</>
 	)
 }

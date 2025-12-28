@@ -19,10 +19,6 @@ export default function Login() {
 				<Link href="/forgot-password">I forgot my password.</Link>
 			</Text>
 
-			<Text>
-				You don't have an account? <Link href="/signup">Sign up.</Link>
-			</Text>
-
 			<DemoLogin />
 		</Page>
 	)
