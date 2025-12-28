@@ -4,7 +4,7 @@ A modern, full-featured blog platform built with Next.js, TypeScript, and MongoD
 
 ## Demo
 
-[Find the demo here]()
+[Find the demo here](https://blog-next-red-three.vercel.app/)
 
 ## Features
 
