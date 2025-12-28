@@ -4,14 +4,7 @@ import { Page, PostsList } from "components"
 import { FeaturedPosts } from "./(home)/featured-posts"
 import { postService } from "api"
 import { SITE_DATA } from "data"
-import type { Post, ResponseInfinitePosts } from "types"
-
-async function getFeaturedPosts(): Promise<Array<Post>> {
-	return await postService
-		.featuredPosts()
-		.then(res => res.data)
-		.catch(err => err)
-}
+import type { ResponseInfinitePosts } from "types"
 
 async function getPosts(): Promise<ResponseInfinitePosts> {
 	return await postService
@@ -21,17 +14,16 @@ async function getPosts(): Promise<ResponseInfinitePosts> {
 }
 
 export const metadata: Metadata = {
-	title: "Homepage",
+	title: `Homepage | ${SITE_DATA.NAME}`,
 }
 
 export default async function Home() {
-	const featuredPosts = await getFeaturedPosts()
 	const posts = await getPosts()
 
 	return (
 		<Page type="all" noWrapper>
 			<SrOnly element="h1">Homepage of {SITE_DATA.NAME}</SrOnly>
-			<FeaturedPosts posts={featuredPosts} />
+			<FeaturedPosts />
 
 			<Wrapper>
 				<Main size="large">
