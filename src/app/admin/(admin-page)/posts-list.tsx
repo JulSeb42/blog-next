@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect, Fragment } from "react"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { BiEdit, BiShow, BiTrash } from "react-icons/bi"
 import {
 	Flexbox,
@@ -11,6 +11,8 @@ import {
 	Text,
 	Button,
 	Hr,
+	SkeletonCard,
+	Skeleton,
 	useDebounce,
 	disableScroll,
 	enableScroll,
@@ -23,19 +25,26 @@ import { useModalOpen } from "context"
 import type { IErrorMessage, Post, ServerPagination } from "types"
 
 export function AdminPostsList() {
+	const router = useRouter()
+	const pathname = usePathname()
+
 	const searchParams = useSearchParams()
 	const currentPage =
 		Number(searchParams.get("page")) === 0
 			? 1
 			: (Number(searchParams.get("page")) ?? 1)
+	const search = searchParams.get("search") ?? ""
+	const category = searchParams.get("category") ?? "none"
+	const author = searchParams.get("author") ?? "none"
+	const draft = searchParams.get("draft") ?? "none"
 
 	const [page, setPage] = useState(currentPage)
 
 	const [filters, setFilters] = useState({
-		search: "",
-		category: "none",
-		author: "none",
-		draft: "none",
+		search,
+		category,
+		author,
+		draft,
 	})
 	const [posts, setPosts] = useState<Array<Post>>([])
 	const [pagination, setPagination] = useState<ServerPagination>()
@@ -63,6 +72,30 @@ export function AdminPostsList() {
 			.finally(() => setIsLoading(false))
 	}, [debouncedSearch, filters.category, filters.author, filters.draft, page])
 
+	useEffect(() => {
+		const params = new URLSearchParams()
+
+		if (page > 1) params.set("page", page.toString())
+		if (filters.search) params.set("search", filters.search)
+		if (filters.category !== "none")
+			params.set("category", filters.category)
+		if (filters.author !== "none") params.set("author", filters.author)
+		if (filters.draft !== "none") params.set("draft", filters.draft)
+
+		const newUrl = params.toString()
+			? `${pathname}?${params.toString()}`
+			: pathname
+		router.replace(newUrl)
+	}, [
+		filters.search,
+		filters.category,
+		filters.author,
+		filters.draft,
+		page,
+		pathname,
+		router,
+	])
+
 	return (
 		<>
 			<SearchPosts
@@ -73,8 +106,20 @@ export function AdminPostsList() {
 
 			<AdminIsland flexDirection="col" gap="sm">
 				{isLoading ? (
-					<></>
-				) : posts?.length ? (
+					<>
+						<PostLineSkeleton />
+						<Hr />
+						<PostLineSkeleton />
+						<Hr />
+						<PostLineSkeleton />
+					</>
+				) : !filters.search.length &&
+				  filters.category === "none" &&
+				  filters.author === "none" &&
+				  filters.draft === "none" &&
+				  !posts?.length ? (
+					<Text>No post yet.</Text>
+				) : posts.length ? (
 					posts.map((post, i) => (
 						<Fragment key={post._id}>
 							<PostLine post={post} setPosts={setPosts} />
@@ -199,5 +244,19 @@ function PostLine({
 				</Alert>
 			</Modal>
 		</>
+	)
+}
+
+function PostLineSkeleton() {
+	return (
+		<SkeletonCard justifyContent="space-between" gap="xs" isShiny>
+			<Skeleton className="w-[70%] h-6" />
+
+			<Flexbox gap="xs">
+				<Skeleton className="rounded-full size-6" />
+				<Skeleton className="rounded-full size-6" />
+				<Skeleton className="rounded-full size-6" />
+			</Flexbox>
+		</SkeletonCard>
 	)
 }
